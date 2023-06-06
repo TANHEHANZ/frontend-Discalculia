@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+*{
+  font-family: 'Kanit', sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  background-color: #11131E;
+  transition: all 0.5s ease-in-out;
+
+}
+::-webkit-scrollbar {
+  width: 8px;
+
+}
+::-webkit-scrollbar-track {
+  background: #e3e4e96b;
+
+}
+::-webkit-scrollbar-thumb {
+  background: #11268363;
+  border-radius: 3em;
+}
