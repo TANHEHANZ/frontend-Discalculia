@@ -5,19 +5,20 @@ import SeguimientosForm from "../models/SeguimientosForm";
 import { UseFech } from "../hooks/useFech";
 import { deleteSeguimiento, getSeguimiento } from "../services/Seguimentos";
 import styled from "styled-components";
+import { getretroalimebntacion ,deletretro } from '../services/Retroalimentacion';
 
 const Seguimientos = () => {
 
-  const [seguimientoactual, setSeguimientoactual] = useState({});
-  const { getApi, data: segui} = UseFech(getSeguimiento);
+  const [retroalimentacionactual, setRetroalimentacionactual] = useState({});
+  const { getApi, data: retro} = UseFech(getretroalimebntacion);
   const { openModal, closeModal } = useModal(
-    Object.keys(seguimientoactual).lengTh > 0
+    Object.keys(retroalimentacionactual).lengTh > 0
       ? "Editar Resultados"
-      : "Agregar Resultado",
+      : "Agregar  ",
     <SeguimientosForm
       getApi={getApi}
-      seguimientoactual={seguimientoactual}
-      setSeguimientoactual={setSeguimientoactual}
+      retroalimentacionactual={retroalimentacionactual}
+      setRetroalimentacionactual={setRetroalimentacionactual}
       closeModal={() => {
         closeModal();
       }}
@@ -25,171 +26,57 @@ const Seguimientos = () => {
   );
   const [filtro, setFiltro] = useState("");
   useEffect(() => {
-    if (Object.keys(seguimientoactual).length > 0) {
+    if (Object.keys(retroalimentacionactual).length > 0) {
       openModal();
     }
-  }, [seguimientoactual]);
+  }, [retroalimentacionactual]);
 
   return (
     <Section>
-    <Info>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{segui.length}</h2>
-   <p>Resultados</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{segui.length}</h2>
-   <p>Resultados</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{segui.length}</h2>
-   <p>Pacientes</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-    </Info>
         <Div>
-        
           <section>
-            <h1>Registro Seguimientos</h1>
-            <button onClick={openModal}> nuevo</button>
-            <button onClick={openModal}> Excel</button>
-            <button onClick={openModal}> Pdf</button>
+            <h1>Registro Retroalimentacion</h1>
           </section>
-          <table>
-            <thead>
-              <tr>
-              
-                <th>Nº</th>
-                <th>id_muestras</th>
-                <th>id_resultados</th>
-                <th>id_doctores</th>
-                <th>id_centros</th>
-                <th>fecha</th>
-                <th>observaciones</th>
-            
-              </tr>
-            </thead>
-            {segui
-              .filter((v) =>
-                v.observaciones.toLowerCase().includes(filtro.toLowerCase())
-              )
-              .map((v, i) => (
-                <tbody key={i}>
-                  <tr>
-                    <td>{i + 1}</td>
-                    <td>{v.id_muestras}</td>
-                    <td>{v.id_resultados}</td>
-                    <td>{v.id_doctores}</td>
-                    <td>{v.id_centros}</td>
-                    <td>{v.fecha}</td>
+            {retro.map((v, i) => (
+                <div key={i}>
+           
+                    <label> Numero de registro : {i + 1}</label>
+                    <label>Descripcion de retroalimentacion : {v.retroalimentacion}</label>
+                    <label>Juego perteneciente: {v.nombre_juego}</label>
                   
-                    <td>{v.observaciones}</td>
-                    <td>
-                      <div>
-                        <button
-                          onClick={() => {
-                            setSeguimientoactual(v);
-                          }}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => {
-                            deleteSeguimiento(v.id, getApi);
-                          }}
-                        >
-                         Eliminar
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                </div>
               ))}
-          </table>
-        </Div>
+      </Div>
       </Section>
   )
 }
 
 export default Seguimientos
 
-const Info = styled.article`
-width:100%;
-height:8em;
-display:flex;
-flex-direction:row;
-flex-wrap:wrap;
-gap:2em;
-margin: 1em auto;
-justify-content:center;
 
-`;
-const Infohijo = styled.section`
-width:calc(80% / 4);
-height:90%;
-backdrop-filter: blur(12px) saturate(29%);
-    -webkit-backdrop-filter: blur(12px) saturate(29%);
-    background-color: rgb(59, 78, 87);
-    border-radius: 18px;
-    border: 1px solid rgba(209, 213, 219, 0.176);
-    padding:1em;
- 
-    &:hover{
-     transform:scale(1.02);
- 
-    }
-& h2{
-  color:#06ad78;
-  font-weight:100;
-}
-& p{
-  color:#bebebe;
-
-  font-weight:100;
-  font-size:0.8em;
-}
-    & article {
-      display:flex;
-      flex-direction:column;
-
-    }
-    & div{
-      display:flex;
-      flex-direction:row;
-      justify-content: space-around;
-      margin:0.2em 0;
-      & img{
-        height:35px;
-        background-color:#c7c7c7;
-        object-fit:cover;
-        border-radius:50%;
-        filter:invert(100%);
-      }
-    }
-`;
 
 const Section = styled.section`
   width: 100%;
   height: 100%;
   background-color: transparent;
   padding: 1em;
+`;
+const Borderabajo = keyframes`
+  0% {
+   & div{
+&::before{
+  width:0%;
+}
+   }
+  }
+
+  100% {
+    & div{
+&::before{
+  width:100%;
+}
+   }
+  }
 `;
 
 const Div = styled.div`
@@ -200,6 +87,7 @@ const Div = styled.div`
   flex-direction: column;
   border-radius:15px;
   border:solid 1px #fff2;
+padding:1em;
   
   & section{
 display:flex;
@@ -212,81 +100,44 @@ margin:0.5em 1em 0 1em;
   color:#fff;
   text-transform:uppercase;
 }
-& > button {
-   padding:0.2em 1em;
-   color:#069266;
-   border:solid 1px #069266;
-   background-color:transparent;
-   cursor: pointer;
   }
-  }
- 
-  & table {
-    margin: 1em auto;
-    /* background-color: transparent; */
-    width: 90%;
-    background-color:rgb(59, 78, 87);
-    height: auto;
-    border-collapse: collapse;
-   
-    & button{
-background-color:transparent;
-border:solid 1px #09216f;
+  & > div{
+    width:calc(90% / 3);
+    border:solid 1.5px #be00fe60;
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    position:relative;
+    z-index:1;
+    background-color:#161929;
+    transition: all 3s ease-in-out;
+    &:hover{
+
+      animation: ${Borderabajo} 1s linear forwards;
+    &::before{
+      width:100%;
+    }
+    }
+    &::before{
+      width:0%;
+      height:0.5em;
+      content:"";
+      background-color:#fff;
+      position:absolute;
+      z-index:-2;
+      bottom:-.5em;
+
+    }
+    & > label {
+width:100%;
+color:#fff;    
+}
+    & label:nth-child(3){
+background-color:#be00fe60;
 color:#fff;
-margin:0 5px;
-cursor: pointer;
-padding:0.2em 1em;
-&:nth-child(2){
-border:solid 1px #6f0909;
-
-}
-&:hover{
-  background-color:#09216f;
-  &:nth-child(2){
-background-color: #6f0909;
-}
-}
+width:100%;
+text-align:center;
     }
-    & th {
-      font-size:1em;
-     font-weight:100;
- 
-    }
-    & td{
-      color:#fff;
-      font-weight:lighter;
-      font-size:0.8em;
-      padding:0.5em 0;
-      text-align:center;
-      &:nth-child(1){
-padding:0 1.5em;
-   }
-    }
-  
-    & tr {
-   border-top:solid 1px #fff2;
-   border-bottom:solid 1px #fff2;
-   
-  &:hover{
-  
-        background-color:#069266;
-        color:#fff;
-      
-  }
-    }
-    & thead {
-     color:#069266;
-     padding:1em 0;
-     & tr {
-      &:hover{
-        background-color:transparent;
-        color:#069266;
-        font-weight:100;
-      }
-     }
-    }
-
-   
   }
 `;
 

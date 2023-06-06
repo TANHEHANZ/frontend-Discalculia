@@ -112,7 +112,6 @@ export const Master = styled.nav`
     & img {
       width: 2em;
       padding: 1.8em 0;
-
       filter: invert(100%);
       background-color: transparent;
     }

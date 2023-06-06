@@ -6,20 +6,18 @@ import { UseFech } from "../hooks/useFech";
 import { deleteResultados, getResultados } from "../services/Resultados";
 
 import styled from "styled-components";
-import { getCategorias } from '../services/Categorias';
+import { getCategorias ,deletecategoria} from '../services/Categorias';
 const Resultados = () => {
-
-  const [resultadoactual, setResultadoactual] = useState({});
+  const [categoriaactual, setCategoriaactual] = useState({});
   const { getApi, data: categ} = UseFech(getCategorias);
-
   const { openModal, closeModal } = useModal(
-    Object.keys(resultadoactual).lengTh > 0
-      ? "Editar Resultados"
-      : "Agregar Resultado",
+    Object.keys(categoriaactual).length > 0
+      ? "Editar Registro Categoria"
+      : "Agregar Registro Categoria",
     <ResultadosForm
       getApi={getApi}
-      resultadoactual={resultadoactual}
-      setResultadoactual={setResultadoactual}
+      categoriaactual={categoriaactual}
+      setCategoriaactual={setCategoriaactual}
       closeModal={() => {
         closeModal();
       }}
@@ -27,13 +25,12 @@ const Resultados = () => {
   );
   const [filtro, setFiltro] = useState("");
   useEffect(() => {
-    if (Object.keys(resultadoactual).length > 0) {
+    if (Object.keys(categoriaactual).length > 0) {
       openModal();
     }
-  }, [resultadoactual]);
+  }, [categoriaactual]);
   return (
     <Section>
-
         <Div>
           <section>
             <h1>Registrar una Categoria</h1>
@@ -44,8 +41,6 @@ const Resultados = () => {
               <tr>
                 <th>Nº</th>
                 <th>Categoria</th>
-
-            
               </tr>
             </thead>
             {categ
@@ -58,14 +53,14 @@ const Resultados = () => {
                       <div>
                         <button
                           onClick={() => {
-                            setResultadoactual(v);
+                            setCategoriaactual(v);
                           }}
                         >
                           Editar
                         </button>
                         <button
                           onClick={() => {
-                            deleteResultados(v.id, getApi);
+                            deletecategoria(v.id, getApi);
                           }}
                         >
                          Eliminar

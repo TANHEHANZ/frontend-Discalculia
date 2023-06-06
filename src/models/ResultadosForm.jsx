@@ -10,121 +10,68 @@ import { UseFech } from "../hooks/useFech";
 import { getMuestras } from '../services/Muestras';
 import { getLaboratotio } from '../services/Laboratorios';
 import { Divinput,Botonagregar,Container,Divboton,Divinputlabel,Input,Select } from './DoctoresForm';
+import { postcategorias ,updatecategoria} from '../services/Categorias';
 
 const ResultadosForm = ( {getApi,
-  resultadoactual,
-  setResultadoactual,
+  categoriaactual,
+  setCategoriaactual,
   closeModal}) => {
 
-    const [resultados ,setResultados]= useState("");
-    const [id_muestras ,setId_muestras]= useState("");
-  const { data: muestras } = UseFech(getMuestras);
+    const [nombre_categoria ,setNombre_categoria]= useState("");
 
-    const [id_laboratorios ,setId_laboratorios]= useState("");
-  const { data: labora } = UseFech(getLaboratotio);
-
-    const [fecha ,setFecha]= useState("");
     useEffect(() => {
-      if (Object.keys(resultadoactual).length > 0) {
-        setResultados(resultadoactual.resultados);
-        setFecha(resultadoactual.fecha);
-      }
+      if (Object.keys(categoriaactual).length > 0) {
+        setNombre_categoria(categoriaactual.nombre_categoria);
+        }
       return () => {
-        setResultadoactual({});
+        setCategoriaactual({});
       };
-    }, [resultadoactual]);
+    }, [categoriaactual]);
 
     const updatepost = (e) => {
       e.preventDefault();
-      if (Object.keys(resultadoactual).length > 0) {
-        updateResultados(
+      if (Object.keys(categoriaactual).length > 0) {
+        updatecategoria(
           {
-            id: resultadoactual.id,
-            resultados: resultados,
-            id_muestras: id_muestras,
-            id_laboratorios: id_laboratorios,
-            fecha: fecha,
+            id: categoriaactual.id,
+            nombre_categoria: nombre_categoria,
           },
           () => {
-            setResultados("");
-            setFecha("");
+            setNombre_categoria("");
             closeModal();
-            setResultadoactual({});
+            setCategoriaactual({});
             getApi();
           }
         );
       } else {
-        postResultados(resultados, id_muestras,id_laboratorios,fecha, () => {
-          setResultados("");
-          setFecha("");
+        postcategorias(nombre_categoria, () => {
+          setNombre_categoria("");
           getApi();
           closeModal();
         });
       }
     };
-
-    
   return (
     <Container>
   <div>
     <form>
       <Divinput>
         <Divinputlabel>
-          <label>resultados:</label>
+          <label>nombre_categoria:</label>
           <Input
-            name="resultados"
+            name="nombre_categoria"
             placeholder="Ingrese el resultado"
             type="text"
             required
-            value={resultados}
-            onChange={(e) => setResultados(e.target.value)}
+            value={nombre_categoria}
+            onChange={(e) => setNombre_categoria(e.target.value)}
           />
         </Divinputlabel>
       </Divinput>
     
-      <Divinput>
-            <Divinputlabel>
-              <label>Muestras</label>
-              <Select onChange={(e) => setId_muestras(e.target.value)}>
-                <option >seleccione la muestra</option>
-                {muestras.map((v, i) => (
-                  <option key={i} value={v.id}>
-                    {v.id}
-                  </option>
-                ))}
-              </Select>
-            </Divinputlabel>
-      </Divinput>
-      <Divinput>
-            <Divinputlabel>
-              <label>Laboratorios</label>
-              <Select onChange={(e) => setId_laboratorios(e.target.value)}>
-                <option >seleccione El Laboratorio</option>
-                {labora.map((v, i) => (
-                  <option key={i} value={v.id}>
-                    {v.nombre}
-                  </option>
-                ))}
-              </Select>
-            </Divinputlabel>
-      </Divinput>
-   
-      <Divinput>
-        <Divinputlabel>
-          <label>Fecha: </label>
-          <Input
-            name="fecha"
-            type="date"
-            required
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-          />
-        </Divinputlabel>
-      </Divinput>
-
       <Divboton>
         <Botonagregar onClick={(e) => updatepost(e)}>
-          {Object.keys(resultadoactual).length > 0 ? "Editar" : "Agregar"}
+          {Object.keys(categoriaactual).length > 0 ? "Editar" : "Agregar"}
         </Botonagregar>
       </Divboton>
     </form>

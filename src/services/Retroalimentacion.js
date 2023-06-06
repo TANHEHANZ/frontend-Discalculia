@@ -1,10 +1,10 @@
 const baseUrl =
     import.meta.env.VITE_BACKEND_URL
-export const getCategorias = async () => {
+export const getretroalimebntacion = async () => {
 
 
     try {
-        const response = await fetch(`${baseUrl}categoria`, {
+        const response = await fetch(`${baseUrl}retro`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -15,8 +15,8 @@ export const getCategorias = async () => {
         console.log(error);
     }
 };
-export const deletecategoria= async (id, callback) => {
-    const response = await fetch(`${baseUrl}categoria/${id}`, {
+export const deletretro= async (id, callback) => {
+    const response = await fetch(`${baseUrl}retro/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -27,30 +27,34 @@ export const deletecategoria= async (id, callback) => {
         callback();
     }
 };
-export const updatecategoria = async (categoriaactual,callback) => {
+export const updateretro = async (retroalimentacionactual,callback) => {
 
-    const response = await fetch(`${baseUrl}categoria/${categoriaactual.id}`, {
+    const response = await fetch(`${baseUrl}retro/${retroalimentacionactual.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
       },
       body: JSON.stringify({
-        nombre_categoria:categoriaactual.nombre_categoria,
+
+        retroalimentacion:retroalimentacionactual.retroalimentacion,
+        id_juegos:retroalimentacionactual.id_juegos,
+
     })});
     if(response.ok){
       callback();
     }
   }
-  export const postcategorias = async (nombre_categoria,callback) => {
-    const response = await fetch(`${baseUrl}categoria`, {
+  export const postretro = async (retroalimentacion,id_juegos,callback) => {
+    const response = await fetch(`${baseUrl}retro`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
       },
       body: JSON.stringify({
-        nombre_categoria:nombre_categoria,
+        retroalimentacion:retroalimentacion,
+        id_juegos:id_juegos,
     })});
     if(response.ok){
       callback();
