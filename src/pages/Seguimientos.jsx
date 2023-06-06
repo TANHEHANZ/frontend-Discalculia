@@ -61,23 +61,23 @@ const Section = styled.section`
   background-color: transparent;
   padding: 1em;
 `;
-const Borderabajo = keyframes`
-  0% {
-   & div{
-&::before{
-  width:0%;
-}
-   }
-  }
+// const Borderabajo = keyframes`
+//   0% {
+//    & div{
+// &::before{
+//   width:0%;
+// }
+//    }
+//   }
 
-  100% {
-    & div{
-&::before{
-  width:100%;
-}
-   }
-  }
-`;
+//   100% {
+//     & div{
+// &::before{
+//   width:100%;
+// }
+//    }
+//   }
+// `;
 
 const Div = styled.div`
   width: 90%;
@@ -92,8 +92,8 @@ padding:1em;
   & section{
 display:flex;
 flex-direction:row;
-gap :1em;
-margin:0.5em 1em 0 1em;
+gap :2em;
+margin:1em 1em 2em 1em;
 & > h1{
   font-size:0.9em;
   font-weight:100;
@@ -111,21 +111,21 @@ margin:0.5em 1em 0 1em;
     z-index:1;
     background-color:#161929;
     transition: all 3s ease-in-out;
-    &:hover{
-
-      animation: ${Borderabajo} 1s linear forwards;
+    padding:1em;
+   &:hover{
     &::before{
-      width:100%;
+      background-color:#be00fe60;
     }
-    }
+   }
     &::before{
-      width:0%;
+      width:90%;
       height:0.5em;
       content:"";
-      background-color:#fff;
+      border:solid 1px #be00fe60;
       position:absolute;
       z-index:-2;
-      bottom:-.5em;
+      bottom:-.6em;
+      border-top:none;
 
     }
     & > label {

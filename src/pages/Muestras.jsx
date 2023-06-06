@@ -4,21 +4,20 @@ import { useModal } from "../hooks/useModal";
 
 import MuestrasForm from '../models/MuestrasForm';
 import { UseFech } from "../hooks/useFech";
-import { deleteMuestras, getMuestras } from "../services/Muestras";
+import { deleteMuestras} from "../services/Muestras";
 import styled from "styled-components";
-
+import { getRegister ,deleteRegister} from '../services/Rgeister';
 const Muestras = () => {
-  const [muestrasactual, setMuestrasactual] = useState({});
-  const { getApi, data: muest} = UseFech(getMuestras);
-
+  const [usuariosactual, setUsuarioactual] = useState({});
+  const { getApi, data: reg} = UseFech(getRegister);
   const { openModal, closeModal } = useModal(
-    Object.keys(muestrasactual).lengTh > 0
-      ? "Editar Resultados"
-      : "Agregar Resultado",
+    Object.keys(usuariosactual).length > 0
+      ? "Editar Register"
+      : "Agregar Register",
     <MuestrasForm
       getApi={getApi}
-      muestrasactual={muestrasactual}
-      setMuestrasactual={setMuestrasactual}
+      usuariosactual={usuariosactual}
+      setUsuarioactual={setUsuarioactual}
       closeModal={() => {
         closeModal();
       }}
@@ -26,100 +25,42 @@ const Muestras = () => {
   );
   const [filtro, setFiltro] = useState("");
   useEffect(() => {
-    if (Object.keys(muestrasactual).length > 0) {
+    if (Object.keys(usuariosactual).length > 0) {
       openModal();
     }
-  }, [muestrasactual]);
+  }, [usuariosactual]);
 
 
   return (
     <Section>
-  <Info>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{muest.length}</h2>
-   <p>Pacientes</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{muest.length}</h2>
-   <p>Pacientes</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{muest.length}</h2>
-   <p>Pacientes</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-    </Info>
+
         <Div>
-        
           <section>
-            <h1>Registro Muestras</h1>
+            <h1>Registro Usuarios</h1>
             <button onClick={openModal}> nuevo</button>
-            <button onClick={openModal}> Excel</button>
-            <button onClick={openModal}> Pdf</button>
           </section>
           <table>
             <thead>
               <tr>
-             
                 <th>Nº</th>
-                <th>id_pacientes</th>
-                <th>id_centros</th>
-                <th>id_tiposcancers</th>
-                <th>id_enfermeras</th>
-                <th>fecha</th>
-               
+                <th>nombre</th>
+                <th>apellido</th>
+                <th>email</th>
+                <th>telefono</th>
+                <th>Passwod</th>
               </tr>
             </thead>
-            {muest
-              .filter((v) =>
-                v.fecha.toLowerCase().includes(filtro.toLowerCase())
-              )
+            {reg
               .map((v, i) => (
                 <tbody key={i}>
                   <tr>
                     <td>{i + 1}</td>
-                    <td>{v.id_pacientes}</td>
-                    <td>{v.id_centros}</td>
-                    <td>{v.id_tiposcancers}</td>
-                    <td>{v.id_enfermeras}</td>
-                    <td>{v.fecha}</td>
+                    <td>{v.nombre}</td>
+                    <td>{v.apellido}</td>
+                    <td>{v.email}</td>
+                    <td>{v.telefono}</td>
+                    <td>{v.password}</td>
                 
-  
-                    <td>
-                      <div>
-                        <button
-                          onClick={() => {
-                            setMuestrasactual(v);
-                          }}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => {
-                            deleteMuestras(v.id, getApi);
-                          }}
-                        >
-                         Eliminar
-                        </button>
-                      </div>
-                    </td>
                   </tr>
                 </tbody>
               ))}
