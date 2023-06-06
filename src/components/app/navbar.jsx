@@ -35,7 +35,7 @@ const Navbar = () => {
           <Topnav>
           <Logout onClick={Cerrasesion}>Salir</Logout>
           <User>
-            <Topnavimg src="src\img\user.png" alt="" />
+  
             <Nameuser>{user.nombre}</Nameuser>
           </User>
         </Topnav>
@@ -91,10 +91,10 @@ const Topnavimg = styled.img`
 `;
 const Logout = styled.button`
   cursor: pointer;
-  border: solid 1px #fff;
-  color: #02d08f;
-  font-size: 1em;
-  width: 5em;
+  border: solid 1px #BF00FE;
+  color: #BF00FE;
+  font-size: 0.9em;
+  width: 6em;
   height: 2em;
   transition: all 0.5s ease-in-out;
   border-radius: 5px;
