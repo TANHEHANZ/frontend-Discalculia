@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import doctors from "../img/doctors.jpg";
+
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useNavContext } from "../context/navcontext";
 import { useuserContext } from "../context/userContext";
+import { Link } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,37 +42,37 @@ function Login() {
 
   return (
     <Abody>
-      <section>
-        <div>
-          <h2>Empieza</h2>
-          <p> Salvando vidasr</p>
-        </div>
+     <section>
         <article>
-        <img src={doctors} alt="" />
-          <h1>Hola! Bienvenido</h1>
+          <img
+            src="https://png.pngtree.com/png-vector/20230531/ourmid/pngtree-cartoon-boy-sitting-down-vector-png-image_6790857.png"
+            alt=""
+          />
+          <h1>Iniciar secion</h1>
+          <p>Si no tienes una cuenta registrate !!</p>
 
           <form>
-          <label>Email</label>
             <input
-              type="text"
-              placeholder=" "
+              type="email"
+              placeholder=" Ingrese el email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
-             <label>Password</label>
+
             <input
               type="password"
-              placeholder=" "
+              placeholder="ingresa la  contraseña"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
-           
+
             <button onClick={enviar}>Ingresar</button>
           </form>
+          <Linkes to="/Register">Registrarse</Linkes>
         </article>
       </section>
     </Abody>
@@ -80,82 +81,57 @@ function Login() {
 
 export default Login;
 
+export const Linkes = styled(Link)`
+color:#fff;
+text-decoration: none;
+background-color:#fcbf4a;
+width:60%;
+display:flex;
+justify-content:center;
+align-items:center;
+position:absolute;
+content:"";
+bottom:2em;
+border-radius:0 0 1em 1em ;
+padding:0.5em 0;
+&:hover{
+border-bottom: solid 1px #fcbf4a;
+}
+`;
+
 const Abody = styled.header`
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right, rgb(90, 122, 239) 50%, #dce2ee 50%);
-  background-color: #fff; 
-  position:relative;
-  overflow:hidden;
-  &::before{
-position:absolute;
-content:"";
-background-color: rgb(99, 131, 250);
-width:20em;
-height:20em;
-top:-10em;
-right:-5em;
-z-index:1;
-border-radius:50%;
-  }
-  &::after{
-position:absolute;
-content:"";
-width:20em;
-height:20em;
-  border-radius: 50%;
-  border: 3em solid rgb(90, 122, 239);
-  background-color: transparent;
-bottom:-5em;
-right:-5em;
-    }
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  background-image:url("https://previews.123rf.com/images/irwanjos/irwanjos1510/irwanjos151000010/47538203-dos-estudiantes-sentados-en-los-bloques-del-alfabeto.jpg");
+background-repeat:no-repeat;
+object-fit:cover;
+background-size:100%;
   & > section {
-    box-shadow:0 0 6px 1px #0002;
-    z-index:2;
-
+    box-shadow: 0 0 6px 1px #0002;
+    z-index: 2;
     & > div {
-      width: 50%;
+      width: 20%;
       background-color: rgb(99, 131, 250);
       height: 100%;
       border-radius: 2em 0 0 2em;
       display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:column;
-    color:#fff;
-    position:relative;
-    overflow:hidden;
-    &::before{
-position:absolute;
-content:"";
-width:4em;
-height:4em;
-border-radius:50%;
-background-color: #fff; 
-top:-2em;
-left:2em;
-    }
-    &::after{
-position:absolute;
-content:"";
-width:8em;
-height:8em;
-border-radius:50%;
-background-color: #fff; 
-bottom:-3.5em;
-right:2em;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
 
-    }
-
-
-    & h2{
-      color:#fff;
-      font-size:3em;
-    }
-    
+      & h2 {
+        color: #fff;
+        font-size: 3em;
+      }
     }
     width: 68%;
     height: 80%;
@@ -165,56 +141,59 @@ right:2em;
     align-items: center;
     & article {
       width: 50%;
-      background-color: rgb(245, 246, 250);
+      background-color: #023047;
       height: 100%;
-      border-radius: 0 2em 2em 0;
+      border-radius: 2em;
       display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:column;
-    & img{
-      width:5em;
-      height:5em;
-      background-color:transparent;
-      box-shadow:0 0 5px 1px #0002;
-      border-radius:0.7em;
-    }
-    & h1{
-      font-size:1.2em;
-      font-weight:100;
-    }
-& form{
-  width:60%;
-  height:60%;
-  display: flex;
-    justify-content: center;
-  
-    flex-direction:column;
-    & label{
-font-size:0.8em;
-&::first-letter{
-  color:blue;
-font-size:1.2em;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      position:relative;
 
-}
-    }
-   & input{
-    width:100%;
-    background-color:transparent;
-    border:solid 1px #0002;
-    padding:0.5em 0;
-   }
-   & button{
-  margin-top:1em;
-    width:100%;
-    background-color:rgb(99, 131, 250);
-    border:solid 1px #0002;
-    padding:0.5em 0;
-    color: #fff;
-   }
-   gap:0.8em;
-}
-
+      & img {
+        width: 6em;
+        height: 6em;
+        background-color: transparent;
+        box-shadow: 0 0 5px 1px #0002;
+        border-radius: 0.7em;
+        filter: invert(1);
+      }
+      & h1 {
+        font-size: 1.5em;
+        font-weight: 100;
+        text-transform: uppercase;
+      }
+      & form {
+        width: 60%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        & label {
+          font-size: 0.8em;
+        }
+        & input {
+          width: 100%;
+          background-color: #fcbf4a;
+          border-radius: 0.5em;
+          outline: none;
+          padding: 0.5em 0;
+        }
+        & button {
+          margin-top: 1em;
+          width: 100%;
+          background-color: rgb(99, 220, 250);
+          border: solid 1px #0002;
+          padding: 0.5em 0;
+          color: #fff;
+          cursor:pointer;
+          &:hover {
+            background-color: #fcbf4a;
+          }
+        }
+        gap: 0.8em;
+      }
     }
   }
 `;
