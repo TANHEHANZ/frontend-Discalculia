@@ -69,12 +69,32 @@ animation:transitionBackground 1s ease ;
 const DivChildContainer = styled.div`
   z-index: 1;
   border-radius: 10px;
-  min-width: 400px;
-  background-color: rgba(59, 78, 87, 0.927);
+  min-width: 600px;
+  background-color: #292828ef;
   animation: move 1s;
   transform: translateY(50px);
   margin-bottom: 100px;
   border:solid 1px #fff2;
+  color:#fff;
+  display:flex;
+  & input{
+    background-color:transparent;
+    border:none;
+    border-bottom:solid 1px #BF00FE;
+    border-radius:0;
+    width:100%;
+  }
+  & select{
+    background-color:transparent;
+    border:none;
+    border-bottom:solid 1px #BF00FE;
+    border-radius:0;
+    color:#BF00FE;
+  }
+  & button{
+    background-color:#161929;
+   
+  }
 `;
 
 const PTitulo = styled.p`
@@ -87,12 +107,12 @@ const PTitulo = styled.p`
 
 `;
 const DivCabecera = styled.div`
-  width: 100%;
+  width: 40%;
   padding: 10px 26px;
   display: flex ;
   justify-content: space-between;
   align-items: center;
-  background: #069266;
+  background: #161929;
   border-radius:10px 10px 0 0;
 `;
 const DivBody = styled.div`

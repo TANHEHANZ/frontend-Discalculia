@@ -4,11 +4,13 @@ import { useModal } from "../hooks/useModal";
 import ResultadosForm from "../models/ResultadosForm";
 import { UseFech } from "../hooks/useFech";
 import { deleteResultados, getResultados } from "../services/Resultados";
+
 import styled from "styled-components";
+import { getCategorias } from '../services/Categorias';
 const Resultados = () => {
 
   const [resultadoactual, setResultadoactual] = useState({});
-  const { getApi, data: resul} = UseFech(getResultados);
+  const { getApi, data: categ} = UseFech(getCategorias);
 
   const { openModal, closeModal } = useModal(
     Object.keys(resultadoactual).lengTh > 0
@@ -31,69 +33,27 @@ const Resultados = () => {
   }, [resultadoactual]);
   return (
     <Section>
-    <Info>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{resul.length}</h2>
-   <p>Resultados</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{resul.length}</h2>
-   <p>Resultados</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-  <Infohijo>
-  <div>
-   <article>
-     <h2>{resul.length}</h2>
-   <p>Pacientes</p>
-   </article>
-    <img src="src\img\paciente.png" alt="" />
-  </div>
-  <p>Lorem ipsum dolor sit amet.</p>
-  </Infohijo>
-    </Info>
+
         <Div>
-        
           <section>
-            <h1>Registro Resultados</h1>
-            <button onClick={openModal}> nuevo</button>
-            <button onClick={openModal}> Excel</button>
-            <button onClick={openModal}> Pdf</button>
+            <h1>Registrar una Categoria</h1>
+            <button onClick={openModal}> nueva categoria</button>
           </section>
           <table>
             <thead>
               <tr>
                 <th>Nº</th>
-                <th>resultados</th>
-                <th>id_muestras</th>
-                <th>id_laboratorios</th>
-                <th>fecha</th>
+                <th>Categoria</th>
+
             
               </tr>
             </thead>
-            {resul
-              .filter((v) =>
-                v.resultados.toLowerCase().includes(filtro.toLowerCase())
-              )
+            {categ
               .map((v, i) => (
                 <tbody key={i}>
                   <tr>
                     <td>{i + 1}</td>
-                    <td>{v.resultados}</td>
-                    <td>{v.id_muestras}</td>
-                    <td>{v.id_laboratorios}</td>
-                    <td>{v.fecha}</td>
+                    <td>{v.nombre_categoria}</td>
                     <td>
                       <div>
                         <button
@@ -123,60 +83,6 @@ const Resultados = () => {
 
 export default Resultados
 
-const Info = styled.article`
-width:100%;
-height:8em;
-display:flex;
-flex-direction:row;
-flex-wrap:wrap;
-gap:2em;
-margin: 1em auto;
-justify-content:center;
-
-`;
-const Infohijo = styled.section`
-width:calc(80% / 4);
-height:90%;
-backdrop-filter: blur(12px) saturate(29%);
-    -webkit-backdrop-filter: blur(12px) saturate(29%);
-    background-color: rgb(59, 78, 87);
-    border-radius: 18px;
-    border: 1px solid rgba(209, 213, 219, 0.176);
-    padding:1em;
- 
-    &:hover{
-     transform:scale(1.02);
- 
-    }
-& h2{
-  color:#06ad78;
-  font-weight:100;
-}
-& p{
-  color:#bebebe;
-
-  font-weight:100;
-  font-size:0.8em;
-}
-    & article {
-      display:flex;
-      flex-direction:column;
-
-    }
-    & div{
-      display:flex;
-      flex-direction:row;
-      justify-content: space-around;
-      margin:0.2em 0;
-      & img{
-        height:35px;
-        background-color:#c7c7c7;
-        object-fit:cover;
-        border-radius:50%;
-        filter:invert(100%);
-      }
-    }
-`;
 
 const Section = styled.section`
   width: 100%;
@@ -186,8 +92,8 @@ const Section = styled.section`
 `;
 
 const Div = styled.div`
-  width: 90%;
-  height: 60vh;
+  width:100%;
+  height: auto;
   display: flex;
   margin:0 auto;
   flex-direction: column;
@@ -196,7 +102,7 @@ const Div = styled.div`
   
   & section{
 display:flex;
-flex-direction:row;
+flex-direction:column;
 gap :1em;
 margin:0.5em 1em 0 1em;
 & > h1{
@@ -204,21 +110,26 @@ margin:0.5em 1em 0 1em;
   font-weight:100;
   color:#fff;
   text-transform:uppercase;
+  width:100%;
 }
 & > button {
    padding:0.2em 1em;
-   color:#069266;
+   color:#6f0909;
    border:solid 1px #069266;
    background-color:transparent;
    cursor: pointer;
+   height:2em;display:flex;
+   justify-content:center;
+   align-items:center;
+   margin:0 auto;
   }
   }
  
   & table {
     margin: 1em auto;
     /* background-color: transparent; */
-    width: 90%;
-    background-color:rgb(59, 78, 87);
+    width: 80%;
+    background-color:transparent;
     height: auto;
     border-collapse: collapse;
    
@@ -262,18 +173,18 @@ padding:0 1.5em;
    
   &:hover{
   
-        background-color:#069266;
+        background-color:#be00fe40;
         color:#fff;
       
   }
     }
     & thead {
-     color:#069266;
+     color:#BF00FE;
      padding:1em 0;
      & tr {
       &:hover{
         background-color:transparent;
-        color:#069266;
+        color:#BF00FE;
         font-weight:100;
       }
      }

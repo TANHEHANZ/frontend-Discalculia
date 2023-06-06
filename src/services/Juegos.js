@@ -33,17 +33,27 @@ export const updateJuego = async (juegoactual,callback) => {
         accept: "application/json",
       },
       body: JSON.stringify({
-        nombre:juegoactual.nombre,
+        nombre_juego:juegoactual.nombre_juego,
         descripcion:juegoactual.descripcion,
         nivel_dificultad:juegoactual.nivel_dificultad,
         imagen:juegoactual.imagen,
         puntuacion:juegoactual.puntuacion,
+        id_categorias:juegoactual.id_categorias,
     })});
     if(response.ok){
       callback();
     }
   }
-  export const postTiposcancer = async (nombre,descripcion,nivel_dificultad,imagen,puntuacion,callback) => {
+  export const postJuegos = async (nombre_juego,descripcion,nivel_dificultad,imagen,puntuacion,id_categorias,callback) => {
+    console.log(JSON.stringify({
+        nombre_juego:nombre_juego,
+        descripcion:descripcion,
+        nivel_dificultad:nivel_dificultad,
+        imagen:imagen,
+        puntuacion:puntuacion,
+        id_categorias:id_categorias,
+    }))
+    
     const response = await fetch(`${baseUrl}juego`, {
       method: "POST",
       headers: {
@@ -51,11 +61,12 @@ export const updateJuego = async (juegoactual,callback) => {
         accept: "application/json",
       },
       body: JSON.stringify({
-        nombre:nombre,
+        nombre_juego:nombre_juego,
         descripcion:descripcion,
         nivel_dificultad:nivel_dificultad,
         imagen:imagen,
         puntuacion:puntuacion,
+        id_categorias:id_categorias,
     })});
     if(response.ok){
       callback();

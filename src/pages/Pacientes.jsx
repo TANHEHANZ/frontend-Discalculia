@@ -5,19 +5,20 @@ import PacientesForm from "../models/PacientesForm";
 import { UseFech } from "../hooks/useFech";
 import juego1 from "../img/imgnay/juego1.png"
 import styled from "styled-components";
-import { getJuegos } from "../services/Juegos";
+import { getJuegos ,deleteJuego} from "../services/Juegos";
+import Resultados from "./Resultados";
 
 const Pacientes = () => {
-  const [pacienteactual, setPacienteactual] = useState({});
+  const [juegoactual, setJuegoactual] = useState({});
   const { getApi, data: juegs } = UseFech(getJuegos);
   const { openModal, closeModal } = useModal(
-    Object.keys(pacienteactual).lengTh > 0
-      ? "Editar pacientes"
-      : "Agregar Pacientes",
+    Object.keys(juegoactual).length > 0
+      ? "Editar Registro Juego"
+      : "Agregar un nuevo Juego",
     <PacientesForm
       getApi={getApi}
-      pacienteactual={pacienteactual}
-      setPacienteactual={setPacienteactual}
+      juegoactual={juegoactual}
+      setJuegoactual={setJuegoactual}
       closeModal={() => {
         closeModal();
       }}
@@ -25,78 +26,28 @@ const Pacientes = () => {
   );
   const [filtro, setFiltro] = useState("");
   useEffect(() => {
-    if (Object.keys(pacienteactual).lengTh > 0) {
+    if (Object.keys(juegoactual).length > 0) {
       openModal();
     }
-  }, [pacienteactual]);
+  }, [juegoactual]);
 
   return (
     <Section>
         <h2>Juegos Guardados</h2>
-
    <article>
- 
         <section>
-          <button onClick={openModal}> nuevo</button>
-          <button onClick={openModal}> Excel</button>
-          <button onClick={openModal}> Pdf</button>
+          <button onClick={openModal}> nuevo juego</button>
+       <p>Buscar Juegos</p>
+          <input  type="text"
+            placeholder="Buscar"
+            value={filtro}
+            onChange={(e) => setFiltro(e.target.value)} />
+         
+        <Resultados/>
         </section>
-        {/* <table>
-          <thead>
-            <tr>
-              <th>Nº</th>
-              <th>Nombre</th>
-              <th>Ap Paterno</th>
-              <th>Ap Materno</th>
-              <th>Sexo</th>
-              <th>F nacimiento</th>
-              <th>Telefono</th>
-              <th>Ci</th>
-              <th>ACCIONES</th>
-            </tr>
-          </thead>
-
-
-          {juegs
-            .filter((v) =>
-              v.nombre_juego.toLowerCase().includes(filtro.toLowerCase())
-            )
-            .map((v, i) => (
-              <tbody key={i}>
-                <tr>
-                  <td>{i + 1}</td>
-                  <td>{v.nombre_juego}</td>
-                  <td>{v.descripcion}</td>
-                  <td>{v.nivel_dificultad}</td>
-                  <td>{v.id_categorias}</td>
-                  <td>{v.fecha_nacimiento}</td>
-                  <td>{v.telefono}</td>
-                  <td>{v.ci}</td>
-
-                  <td>
-                    <div>
-                      <button
-                        onClick={() => {
-                          setPacienteactual(v);
-                        }}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => {
-                          deletePacientes(v.id, getApi);
-                        }}
-                      >
-                       Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
-        </table> */}
-  
+          
       <Div>
+  
       {juegs
             .filter((v) =>
               v.nombre_juego.toLowerCase().includes(filtro.toLowerCase())
@@ -112,14 +63,14 @@ const Pacientes = () => {
         <p>Pertenece A :{v.id_categorias}</p>
         <button
                         onClick={() => {
-                          setPacienteactual(v);
+                          setJuegoactual(v);
                         }}
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => {
-                          deletePacientes(v.id, getApi);
+                          deleteJuego(v.id, getApi);
                         }}
                       >
                        Eliminar
@@ -147,7 +98,7 @@ const Section = styled.section`
   margin:2em auto;
   & > section{
     width:40%;
-  height: 20vh;
+  height: auto;
   padding:1em 0;
   display: flex;
   margin:0 auto;
@@ -157,6 +108,19 @@ const Section = styled.section`
   border-radius:15px;
   border:solid 1px #be00fe40;
   gap:.5em;
+  & p{
+color:#fff;
+
+  }
+  & input{
+width:90%;
+background-color:transparent;
+border:none;
+border-bottom:solid 1px #BF00FE;
+outline: none;
+margin:2em 0;
+color:#fff;
+  }
   &:hover{
     box-shadow:0 2px 5px #BF00FE;
   }
